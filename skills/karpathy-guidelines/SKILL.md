@@ -1,67 +1,43 @@
 ---
 name: karpathy-guidelines
-description: Behavioral guidelines to reduce common LLM coding mistakes. Use when writing, reviewing, or refactoring code to avoid overcomplication, make surgical changes, surface assumptions, and define verifiable success criteria.
+description: >
+  Reference documentation for the four Karpathy coding principles. In a
+  Hermes workspace context, these principles are absorbed into the skill
+  suite — load code-craft-principles instead. This file exists for
+  documentation and AGENTS.md generation purposes.
 license: MIT
 ---
 
-# Karpathy Guidelines
+# Karpathy Guidelines — Reference
 
 Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls.
 
-**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+**If you are running in a Hermes Agent workspace:** These principles are absorbed into the workspace skill suite. Do not load this skill separately. Load the following atoms instead:
 
-## 1. Think Before Coding
+- `code-craft-principles` — Think Before Coding, Simplicity First, Surgical Changes
+- `test-driven-development` — Goal-Driven Execution (RED/GREEN/REFACTOR cycle)
+- `writing-plans` — verifiable success criteria, bite-sized tasks
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
+The `AGENTS.md` in this repo is the synthesized drop-in for projects that don't have the Hermes skill suite available.
 
-Before implementing:
-- State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them - don't pick silently.
-- If a simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
+---
 
-## 2. Simplicity First
+## The Four Principles (Reference)
 
-**Minimum code that solves the problem. Nothing speculative.**
+### 1. Think Before Coding
+Don't assume. Don't hide confusion. Surface tradeoffs. State assumptions explicitly, present multiple interpretations, push back when warranted, stop when confused.
 
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
+### 2. Simplicity First
+Minimum code that solves the problem. Nothing speculative. No features beyond what was asked, no abstractions for single-use code, no flexibility that wasn't requested. If 200 lines could be 50, rewrite it. **The test:** Would a senior engineer say this is overcomplicated?
 
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+### 3. Surgical Changes
+Touch only what you must. Clean up only your own mess. Don't improve adjacent code. Don't refactor things that aren't broken. Match existing style. **The test:** Every changed line should trace directly to the user's request.
 
-## 3. Surgical Changes
+### 4. Goal-Driven Execution
+Define success criteria. Loop until verified. Transform imperative tasks into verifiable goals. For multi-step tasks, state a brief plan with explicit verify steps. Strong success criteria let the agent loop independently.
 
-**Touch only what you must. Clean up only your own mess.**
+---
 
-When editing existing code:
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it - don't delete it.
+## Tradeoff Note
 
-When your changes create orphans:
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-The test: Every changed line should trace directly to the user's request.
-
-## 4. Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
-
-For multi-step tasks, state a brief plan:
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+These guidelines bias toward **caution over speed**. For trivial tasks, use judgment — not every change needs the full rigor. The goal is reducing costly mistakes on non-trivial work.
